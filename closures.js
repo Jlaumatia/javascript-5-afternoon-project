@@ -23,12 +23,14 @@ function outer() {
 */
   
 // Code Here
+let inner = new outer()
 
 
 
 //Once you do that, invoke inner.
 
 //Code Here
+inner()
 
 
 
@@ -52,6 +54,8 @@ function callFriend(name) {
 */
 
 //Code Here
+let callJake = callFriend('Jake');
+callJake('435-555-9248')
 
 
 
@@ -62,15 +66,23 @@ function callFriend(name) {
 */
 
 //Code Here
+function makeCounter(){
+  let count = 0;
+
+  function addOne(){
+    return count += 1;
+  }
+  return addOne;
+}
 
 
 
 //Uncomment this once you make your function
-//   var count = makeCounter();
-//   count(); // 1
-//   count(); // 2
-//   count(); // 3
-//   count(); // 4
+  var count = makeCounter();
+  count(); // 1
+  count(); // 2
+  count(); // 3
+  count(); // 4
 
 
 
@@ -78,33 +90,47 @@ function callFriend(name) {
 
 /*
   Inside the function called counterFactory return two functions that implement up/down counter.
-  The first function is called inc, this function is responsible for incrementing the value once and returning the updated value.
-  The second function is called dec, this function is responsible for decrementing the value by one and returning the updated value.
+  The first function is called inc, this function is responsible for incrementing the value once and 
+  returning the updated value.
+  The second function is called dec, this function is responsible for decrementing the value by one and 
+  returning the updated value.
   You will need to use the module pattern to achieve this.
   Information on the module pattern available here: 
   http://stackoverflow.com/questions/17776940/javascript-module-pattern-with-example?answertab=votes#tab-top
 */
 
 function counterFactory(value) {
-  // Code here.
+  let counter = value;
+
+
 
   return {
+    inc: function(){
+      counter += 1;
+      return counter;
+    },
+    dec: function(){
+       counter -= 1;
+      return counter;
+    }
+    
 
   };
 }
 
 counter = counterFactory(10);
-// counter.inc() // 11
-// counter.inc() // 12
-// counter.inc() // 13
-// counter.dec() // 12
+counter.inc() // 11
+counter.inc() // 12
+counter.inc() // 13
+counter.dec() // 12
 
 
 
 ////////// PROBLEM 5 //////////
 
 /*
-  Inside the motivation function create another function called message that will return the welcome text with the firstname and lastname.
+  Inside the motivation function create another function called message that will return the welcome text with the 
+  firstname and lastname.
   The final message should say "You're doing awesome, keep it up firstname lastname." 
   (Hint: don't forget to have a space between the firstname and lastname and a period at the end of the sentence.)
 */
@@ -113,9 +139,12 @@ function motivation( firstname, lastname ) {
   var welcomeText = "You're doing awesome, keep it up";
 
   // code message function here.
+function message(){
+  return `${welcomeText} ${firstname} ${lastname}.`;
+}
 
   //Uncommment this to return the value of your message function
-  //return message;
+  return message;
 }
 
 var greeting = motivation('Billy', 'Bob'); // 'You're doing awesome keep it up Billy Bob.
@@ -143,9 +172,16 @@ var module = (function() {
   // Anything that is being returned is made public and can be invoked from
   // outside our lexical scope
   return {
-    // Code here.
-  };
+    publicMethod(){
+      return privateMethod()
+    }
+      
+  }; 
+  module.publicMethod()
 })();
+
+
+
 
 
 
@@ -162,7 +198,15 @@ function secretNumber() {
   var secret = 143;
 
   return {
-    // Code here
+    addToSecret(num){
+      return secret += num;
+    },
+
+    takeAwayFromSecret(num){
+      return secret -= num;
+    }
+    
+
   };
 }
 
@@ -180,14 +224,15 @@ function secretNumber() {
     4 seconds after call - log 4
     5 seconds after call - log 5
 
-  However, because each call to console.log occurs after the loop has finished, the value of i has changed before the console.log executes.
+  However, because each call to console.log occurs after the loop has finished, the value of i has changed before 
+  the console.log executes.
   We'll need to use a closure to preserve a reference to i at the time of execution.
   
   Fix the code below to log the desired output.
 */
 
 function timeOutCounter() {
-  for (var i = 0; i <= 5; i++) {
+  for (let i = 0; i <= 5; i++) {
     setTimeout(function() {
       console.log(i);
     }, i * 1000);
